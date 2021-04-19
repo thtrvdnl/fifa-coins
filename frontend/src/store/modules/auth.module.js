@@ -18,7 +18,7 @@ export default {
   actions: {
     login ({ commit }, user) {
       return new Promise((resolve, reject) => {
-        axios({ url: 'http://127.0.0.1:8000/api/auth/token/login/', data: user, method: 'POST' })
+        axios({ url: 'http://18.220.255.127/api/auth/token/login/', data: user, method: 'POST' })
           .then(resp => {
             const token = 'Token ' + resp.data.auth_token
             localStorage.setItem('token', token)
@@ -40,7 +40,7 @@ export default {
     },
     register ({ commit }, user) {
       return new Promise((resolve, reject) => {
-        axios({ url: 'http://localhost:8000/api/user/registration/', data: user, method: 'POST' })
+        axios({ url: 'http://18.220.255.127/api/user/registration/', data: user, method: 'POST' })
           .catch(err => {
             commit('setError', getErrorMessage(err.response.data))
           })
@@ -49,7 +49,7 @@ export default {
     logout ({ commit }) {
       return new Promise((resolve, reject) => {
         commit('logout')
-        axios({ url: 'http://127.0.0.1:8000/api/auth/token/logout/', method: 'POST' })
+        axios({ url: 'http://18.220.255.127/api/auth/token/logout/', method: 'POST' })
         localStorage.removeItem('token')
         delete axios.defaults.headers.common.Authorization
         resolve()
