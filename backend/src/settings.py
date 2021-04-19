@@ -1,3 +1,5 @@
+import os
+
 from environs import Env
 from pathlib import Path
 
@@ -6,11 +8,12 @@ env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = env.str('SECRET_KEY'),
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:8080', 'http://localhost:8080']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '18.220.255.127']
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:8080', 'http://localhost:8080', '18.220.255.127']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -73,12 +76,12 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': env.str('SQL_ENGINE'),
-        'NAME': env.str('SQL_DATABASE'),
-        'USER': env.str('SQL_USER'),
-        'PASSWORD': env.str('SQL_PASSWORD'),
-        'HOST': env.str('SQL_HOST'),
-        'PORT': env.str('SQL_PORT'),
+        'ENGINE': os.getenv('SQL_ENGINE'),
+        'NAME': os.getenv('SQL_NAME'),
+        'USER': os.getenv('SQL_USER'),
+        'PASSWORD': os.getenv('SQL_PASSWORD'),
+        'HOST': os.getenv('SQL_HOST'),
+        'PORT': os.getenv('SQL_PORT'),
     }
 }
 
@@ -107,4 +110,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
